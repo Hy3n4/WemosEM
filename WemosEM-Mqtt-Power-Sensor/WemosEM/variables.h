@@ -23,6 +23,7 @@
 #define MAXLEN_MQTT_USERNAME 30
 #define MAXLEN_MQTT_PASSWORD 30
 #define MAXLEN_SYSTEM_PASSWORD 30
+#define MAXLEN_HA_ENABLED 1
 
 #define MAXLEN_VOLTAGE 7
 #define MAXLEN_ICAL 6
@@ -50,9 +51,9 @@ const PROGMEM char TOPIC_HA_CURRENT[] = "homeassistant/sensor/%s/current/config"
 const PROGMEM char TOPIC_HA_POWER[] = "homeassistant/sensor/%s/power/config";
 const PROGMEM char TOPIC_HA_KWH[] = "homeassistant/sensor/%s/kwh/config";
 // const PROGMEM char TOPIC_HA_KWTOTAL[] = "homeassistant/sensor/%s/kwTotal/config";
-const PROGMEM char MESSAGE_HA_CURRENT[] = "{\"unit_of_measurement\":\"A\",\"state_topic\":\"wemos/%s/power\",\"value_template\":\"{{ value_json.current }}\",\"json_attributes_topic\":\"wemos/%s/power\",\"name\":\"%s-current\",\"unique_id\":\"%s-current-wemosem\",\"device\":{\"identifiers\":[\"%s\"],\"name\":\"%s\",\"sw_version\":\"WemosEM 1.1\",\"model\":\"Wemos D1 Mini + SCT013\",\"manufacturer\":\"Wemos\"},\"icon\":\"mdi:counter\",\"availability_topic\":\"wemos/%s/status\"}";
-const PROGMEM char MESSAGE_HA_POWER[] = "{\"unit_of_measurement\":\"w\",\"state_topic\":\"wemos/%s/power\",\"device_class\":\"power\",\"value_template\":\"{{ value_json.watios }}\",\"json_attributes_topic\":\"wemos/%s/power\",\"name\":\"%s-watios\",\"unique_id\":\"%s-watios-wemosem\",\"device\":{\"identifiers\":[\"%s\"],\"name\":\"%s\",\"sw_version\":\"WemosEM 1.1\",\"model\":\"Wemos D1 Mini + SCT013\",\"manufacturer\":\"Wemos\"},\"icon\":\"mdi:counter\",\"availability_topic\":\"wemos/%s/status\"}";
-const PROGMEM char MESSAGE_HA_KWH[] = "{\"unit_of_measurement\":\"kwh\",\"state_topic\":\"wemos/%s/power\",\"device_class\":\"power\",\"value_template\":\"{{ value_json.kwh }}\",\"json_attributes_topic\":\"wemos/%s/power\",\"name\":\"%s-kwh\",\"unique_id\":\"%s-kwh-wemosem\",\"device\":{\"identifiers\":[\"%s\"],\"name\":\"%s\",\"sw_version\":\"WemosEM 1.1\",\"model\":\"Wemos D1 Mini + SCT013\",\"manufacturer\":\"Wemos\"},\"icon\":\"mdi:counter\",\"availability_topic\":\"wemos/%s/status\"}";
+const PROGMEM char MESSAGE_HA_CURRENT[] = "{\"unit_of_measurement\":\"A\",\"state_topic\":\"wemos/%s/power\",\"value_template\":\"{{ value_json.current }}\",\"json_attributes_topic\":\"wemos/%s/power\",\"name\":\"%s-current\",\"unique_id\":\"%s-current-wemosem\",\"device\":{\"identifiers\":[\"%s\"],\"name\":\"%s\",\"sw_version\":\"WemosEM 1.1\",\"model\":\"Wemos D1 Mini + SCT013\",\"manufacturer\":\"Wemos\"},\"icon\":\"mdi:current-ac\",\"availability_topic\":\"wemos/%s/status\",\"state_class\":\"measurement\",\"device_class\":\"current\"}";
+const PROGMEM char MESSAGE_HA_POWER[] = "{\"unit_of_measurement\":\"W\",\"state_topic\":\"wemos/%s/power\",\"device_class\":\"power\",\"value_template\":\"{{ value_json.watios }}\",\"json_attributes_topic\":\"wemos/%s/power\",\"name\":\"%s-watios\",\"unique_id\":\"%s-watios-wemosem\",\"device\":{\"identifiers\":[\"%s\"],\"name\":\"%s\",\"sw_version\":\"WemosEM 1.1\",\"model\":\"Wemos D1 Mini + SCT013\",\"manufacturer\":\"Wemos\"},\"icon\":\"mdi:counter\",\"availability_topic\":\"wemos/%s/status\"}";
+const PROGMEM char MESSAGE_HA_KWH[] = "{\"unit_of_measurement\":\"kWh\",\"state_topic\":\"wemos/%s/power\",\"device_class\":\"energy\",\"value_template\":\"{{ value_json.kwh }}\",\"json_attributes_topic\":\"wemos/%s/power\",\"name\":\"%s-kwh\",\"unique_id\":\"%s-kwh-wemosem\",\"device\":{\"identifiers\":[\"%s\"],\"name\":\"%s\",\"sw_version\":\"WemosEM 1.1\",\"model\":\"Wemos D1 Mini + SCT013\",\"manufacturer\":\"Wemos\"},\"icon\":\"mdi:grid\",\"availability_topic\":\"wemos/%s/status\",\"state_class\":\"total_increasing\"}";
 // const PROGMEM char MESSAGE_HA_KWTOTAL[] = "{\"unit_of_measurement\":\"kwTotal\",\"state_topic\":\"wemos/%s/power\",\"device_class\":\"power\",\"value_template\":\"{{ value_json.kwTotal }}\",\"json_attributes_topic\":\"wemos/%s/power\",\"name\":\"%s-kwTotal\",\"unique_id\":\"%s-kwTotal-wemosem\",\"device\":{\"identifiers\":[\"%s\"],\"name\":\"%s\",\"sw_version\":\"WemosEM 1.1\",\"model\":\"Wemos D1 Mini + SCT013\",\"manufacturer\":\"Wemos\"},\"icon\":\"mdi:counter\",\"availability_topic\":\"wemos/%s/status\"}";
 
 

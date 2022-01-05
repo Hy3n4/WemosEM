@@ -289,7 +289,9 @@ void initMqtt() {
         Serial.println(" MQTT Connected. ");
         mqtt_client.subscribe((char *)mqtt_topic_subscribe.c_str());
         // Discover Notify Home Assistant
-       // discoverHA();
+        if (ha_enabled) {
+          discoverHA();
+        }
     } else {
       Serial.println("failed, rc=" + String(mqtt_client.state()) + " Try again in 5 seconds");
       // Wait 5 seconds before retrying
