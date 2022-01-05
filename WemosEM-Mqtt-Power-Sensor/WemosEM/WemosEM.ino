@@ -22,7 +22,6 @@
 #include <BlynkSimpleEsp8266.h>
 #include <ThingSpeak.h>
 #include <ArduinoOTA.h>
-
 #include "WiFiClientPrint.h"
 #include "variables.h"
 #include "settings.h"

@@ -57,6 +57,7 @@ function loadConfig() {
     $('#mqtt-port').val(data.mqtt_port);
     $('#mqtt-user').val(data.mqtt_username);
     $('#mqtt-pass').val(data.mqtt_password);
+    $('#enableHADiscover').prop('checked', data.ha_enabled);
 
     // CALIBRATE
     $('#voltage').val(data.votalje);
@@ -117,7 +118,8 @@ function saveMQTT() {
       mqtt_server: $('#mqtt-ip').val(),
       mqtt_port: $('#mqtt-port').val(),
       mqtt_username: $('#mqtt-user').val(),
-      mqtt_password: $('#mqtt-pass').val()
+      mqtt_password: $('#mqtt-pass').val(),
+      ha_enabled: ($('#enableHADiscover').prop('checked') ? "1" : "0")
     }).done(function (data) {
 
       if (!data || data.length == 0) {

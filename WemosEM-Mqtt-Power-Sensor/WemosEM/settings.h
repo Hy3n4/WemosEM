@@ -52,6 +52,7 @@ String mqtt_server = DEFAULT_MQTT_SERVER;
 int mqtt_port = 1883;
 String mqtt_username = DEFAULT_MQTT_USERNAME;
 String mqtt_password = DEFAULT_MQTT_PASSWORD;
+boolean ha_enabled = false;
 
 int message_interval = DEFAULT_MESSAGE_INTERVAL;     // Time in ms between each message. 5000 ms = 5 seconds
 
@@ -130,6 +131,8 @@ boolean loadConfig() {
   mqtt_port = (jsonConfig["mqtt_port"] == "" ? DEFAULT_MQTT_PORT : jsonConfig["mqtt_port"]);
   mqtt_username = (jsonConfig["mqtt_username"] == "" ? DEFAULT_MQTT_USERNAME : jsonConfig["mqtt_username"].as<String>());
   mqtt_password = (jsonConfig["mqtt_password"] == "" ? DEFAULT_MQTT_PASSWORD : jsonConfig["mqtt_password"].as<String>());
+  ha_enabled = (jsonConfig["ha_enabled"]);
+
   // CALIBRATE
   message_interval = (jsonConfig["message_interval"] == "" ? DEFAULT_MESSAGE_INTERVAL : jsonConfig["message_interval"]);
   mainsVoltage = (jsonConfig["voltage"] == "" ? DEFAULT_VOLTAGE : jsonConfig["voltage"]);
@@ -177,6 +180,8 @@ bool saveConfig() {
   jsonConfig["mqtt_port"] = mqtt_port;
   jsonConfig["mqtt_username"] = mqtt_username;
   jsonConfig["mqtt_password"] = mqtt_password;
+  jsonConfig["ha_enabled"] = ha_enabled;
+
   // CALIBRATE
   jsonConfig["message_interval"] = message_interval;
   jsonConfig["voltage"] = mainsVoltage;

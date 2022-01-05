@@ -60,6 +60,7 @@ void handleConfig() {
 	json["mqtt_port"] = mqtt_port;
   json["mqtt_username"] = mqtt_username.c_str();
   json["mqtt_password"] = mqtt_password.c_str();
+  json["ha_enabled"] = ha_enabled;
 
   // CALIBRATE
   json["votalje"] = mainsVoltage;
@@ -88,19 +89,21 @@ void handleConfig() {
 void handleSaveMQTT() {
 
   StaticJsonDocument<256> json;
-  String jsonString, _mqtt_enabled, _mqtt_server, _mqtt_port, _mqtt_username, _mqtt_password;
+  String jsonString, _mqtt_enabled, _mqtt_server, _mqtt_port, _mqtt_username, _mqtt_password, _ha_enabled;
 
 	_mqtt_enabled = httpServer.arg("mqtt_enabled");
   _mqtt_server = httpServer.arg("mqtt_server");
 	_mqtt_port = httpServer.arg("mqtt_port");
 	_mqtt_username = httpServer.arg("mqtt_username");
 	_mqtt_password = httpServer.arg("mqtt_password");
+  _ha_enabled = httpServer.arg("ha_enabled");
 
   Serial.println("MQTT Enabled: " + _mqtt_enabled);
   Serial.println("MQTT Server: " + _mqtt_server);
   Serial.println("MQTT Port: " + _mqtt_port);
   Serial.println("MQTT Username: " + _mqtt_username);
   Serial.println("MQTT Password: " + _mqtt_password);
+  Serial.println("HA Enabled: " + _ha_enabled);
 
 	if(_mqtt_enabled.length() > 0 && _mqtt_enabled.length() <= MAXLEN_MQTT_ENABLED) {
     if (_mqtt_enabled.toInt() == 1) {
@@ -134,6 +137,16 @@ void handleSaveMQTT() {
     mqtt_password = _mqtt_password;
   } else {
     json["mqtt_password"] = "Error: mqtt password parameter incorrect";
+  }
+
+  if(_ha_enabled.length() > 0 && _ha_enabled.length() <= MAXLEN_HA_ENABLED) {
+    if (_ha_enabled.toInt() == 1) {
+      ha_enabled = true;
+    } else {
+      ha_enabled = false;
+    }
+  } else {
+    json["ha_enabled"] = "Error: mqtt enable parameter incorrect";
   }
 
   if (json.size() == 0 ) {
