@@ -15,7 +15,7 @@ long lastMsgMQTT = 0; // Last Message MQTT
 void resetKwh() {
 
   beforeResetKiloWattHours = kiloWattHours;
-  watiosTotal = 0.0;
+  wattTotal = 0.0;
   kiloWattHours = 0.0;
 }
 
@@ -52,23 +52,27 @@ void em_read(bool calibrate) {
     rmsCurrent = emon.calcIrms(NUM_SAMPLES);  // Calculate Irms only
 
     rmsPower = rmsCurrent * mainsVoltage;                       // Calculates RMS Power
-    watiosTotal += ((double)rmsPower * ((millis()-lastTimeMeasure) / 1000.0)/3600.0); // Calculates kilowatt hours used since last reboot. 3600 = 60min*60sec / 1000.0 watios = kwh
+    wattTotal += ((double)rmsPower * ((millis()-lastTimeMeasure) / 1000.0)/3600.0); // Calculates kilowatt hours used since last reboot. 3600 = 60min*60sec / 1000.0 watt = kwh
 
-    kiloWattHours = watiosTotal / 1000.0;
+    kiloWattHours = wattTotal / 1000.0;
 
-    Serial.print(" [METER] - rmsCurrent: ");
-    Serial.print(rmsCurrent);
-    Serial.print(" mainsVoltage: ");
-    Serial.print(mainsVoltage);
-    Serial.print(" Watios: ");
-    Serial.print(watiosTotal);
-
-    Serial.print(" kwh: ");
-    Serial.print(kiloWattHours);
-    Serial.print(" Before reset kwh: ");
-    Serial.print(beforeResetKiloWattHours);
-    Serial.print(" lastTimeMeasure: ");
+    Serial.println("[METER]:");
+    Serial.println("--------");
+    Serial.print("rmsPower: ");
+    Serial.println(rmsPower);
+    Serial.print("rmsCurrent: ");
+    Serial.println(rmsCurrent);
+    Serial.print("mainsVoltage: ");
+    Serial.println(mainsVoltage);
+    Serial.print("Watt: ");
+    Serial.println(wattTotal);
+    Serial.print("kwh: ");
+    Serial.println(kiloWattHours);
+    Serial.print("Before reset kwh: ");
+    Serial.println(beforeResetKiloWattHours);
+    Serial.print("lastTimeMeasure: ");
     Serial.println(lastTimeMeasure);
+    Serial.println("--------");
 
     // If not AP mode
     // if (isSTA()) {

@@ -62,7 +62,8 @@ void setup(void) {
   setup_thingspeak();
 
   setupOTA();
-
+  Serial.print("Setup Ical: ");
+  Serial.println(Ical);
   emon.current(A0, Ical);
   em_read(true);
 

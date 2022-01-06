@@ -47,6 +47,7 @@ void handleConfig() {
   String jsonString;
 
   // WIFI
+  json["hostname"] = WiFi.hostname();
   json["wifi_ssid"] = WiFi.SSID();
   json["wifi_password"] = WiFi.psk();
 	json["wifi_mode"] = ipMode;
@@ -146,7 +147,7 @@ void handleSaveMQTT() {
       ha_enabled = false;
     }
   } else {
-    json["ha_enabled"] = "Error: mqtt enable parameter incorrect";
+    json["ha_enabled"] = "Error: Home Assistant enable parameter incorrect";
   }
 
   if (json.size() == 0 ) {

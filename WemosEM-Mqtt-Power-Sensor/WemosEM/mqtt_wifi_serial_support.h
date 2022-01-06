@@ -120,7 +120,7 @@ String build_payload() {
 
   json["current"] = String(rmsCurrent);
   json["voltage"] = String(mainsVoltage);
-  json["watios"] = String(rmsPower);
+  json["watt"] = String(rmsPower);
   json["kwh"] = String(kiloWattHours);
   json["beforeKwh"] = String(beforeResetKiloWattHours);
   json["ical"] = String(Ical);
@@ -235,7 +235,7 @@ void discoverHA() {
   sprintf_P(message, MESSAGE_HA_CURRENT, wifi_hostname.c_str(), wifi_hostname.c_str(),wifi_hostname.c_str(),wifi_hostname.c_str(),wifi_hostname.c_str(),wifi_hostname.c_str(),wifi_hostname.c_str() );
   mqtt_client.publish(topic, message, true);
 
-  // Power (watios)
+  // Power (watt)
   sprintf_P(topic, TOPIC_HA_POWER, wifi_hostname.c_str() );
   sprintf_P(message, MESSAGE_HA_POWER, wifi_hostname.c_str(), wifi_hostname.c_str(),wifi_hostname.c_str(),wifi_hostname.c_str(),wifi_hostname.c_str(),wifi_hostname.c_str(),wifi_hostname.c_str() );
   mqtt_client.publish(topic, message, true);

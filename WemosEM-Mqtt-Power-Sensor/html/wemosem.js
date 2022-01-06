@@ -200,7 +200,7 @@ function loadStatus() {
 
       $('.current-value').html(data.current);
       $('.voltage-value').html(data.voltage);
-      $('.watios-value').html(data.watios);
+      $('.watt-value').html(data.watt);
       $('.kwh-value').html(data.kwh);
       $('.ical-value').html(data.ical);
       $('.mqttreconnected-value').html(data.mqttreconnected);

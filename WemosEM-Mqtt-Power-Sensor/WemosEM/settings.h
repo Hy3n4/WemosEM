@@ -12,6 +12,7 @@
 #define DEFAULT_EMPTY ""
 
 // WIFI
+#define DEFAULT_HOSTNAME wifi_hostname.c_str()
 #define DEFAULT_WIFI_NAME ""
 #define DEFAULT_WIFI_PASSWORD ""
 #define DEFAULT_IP_MODE 0 //  0 = DHCP, 1 = Static
@@ -40,6 +41,7 @@ int ipMode = DEFAULT_IP_MODE; // 0 = DHCP, 1 = Static
 
 // Add your Wifi details below. Set SSID to NULL if unused.
 // WiFi slot 1
+String hostname = DEFAULT_HOSTNAME;
 String wifi_name = DEFAULT_WIFI_NAME;
 String wifi_password =  DEFAULT_WIFI_PASSWORD;
 String ip =  DEFAULT_IP;
@@ -95,10 +97,12 @@ boolean loadConfig() {
   }
 
   size_t size = configFile.size();
-  // if (size > 1024) {
-  //   Serial.println("ERROR: Config file size is too large");
-  //   return false;
-  // }
+  if (size > 1536) {
+    Serial.println("ERROR: Config file size is too large");
+    Serial.print("Json size: ");
+    Serial.println(size);
+    return false;
+  }
 
   // Allocate a buffer to store contents of the file.
   std::unique_ptr<char[]> buf(new char[size]);
@@ -108,10 +112,10 @@ boolean loadConfig() {
   // use configFile.readString instead.
   configFile.readBytes(buf.get(), size);
 
-  DynamicJsonDocument jsonConfig(1024);
+  DynamicJsonDocument jsonConfig(1536);
   auto error = deserializeJson(jsonConfig, buf.get());
   if (error) {
-    Serial.println("Failed to parse config file");
+    Serial.println("ERROR: Failed to parse config file");
     return false;
   }
 
@@ -119,6 +123,7 @@ boolean loadConfig() {
   Serial.println("LOADED CONFIG: " + jsonString);
 
   // WIFI
+  hostname = (jsonConfig["hostname"] == "" ? DEFAULT_HOSTNAME : jsonConfig["hostname"].as<String>());
   wifi_name = (jsonConfig["wifi_name"] == "" ? DEFAULT_WIFI_NAME : jsonConfig["wifi_name"].as<String>());
   wifi_password = (jsonConfig["wifi_password"] == "" ? DEFAULT_WIFI_PASSWORD : jsonConfig["wifi_password"].as<String>());
   ipMode = (jsonConfig["ip_mode"] == "" ? DEFAULT_IP_MODE : jsonConfig["ip_mode"]);
@@ -155,7 +160,7 @@ boolean loadConfig() {
   dayReset = (jsonConfig["dayReset"] == "" ? 0 : jsonConfig["dayReset"]);
 
   // KWH
-  watiosTotal = (jsonConfig["watiosTotal"] == "" ? 0.0 : jsonConfig["watiosTotal"]);
+  wattTotal = (jsonConfig["wattTotal"] == "" ? 0.0 : jsonConfig["wattTotal"]);
   kiloWattHours = (jsonConfig["kiloWattHours"] == "" ? 0.0 : jsonConfig["kiloWattHours"]);
   beforeResetKiloWattHours = (jsonConfig["beforeResetKiloWattHours"] == "" ? 0.0 : jsonConfig["beforeResetKiloWattHours"]);
 
@@ -164,10 +169,11 @@ boolean loadConfig() {
 }
 
 bool saveConfig() {
-  DynamicJsonDocument jsonConfig(1024);
+  DynamicJsonDocument jsonConfig(1536);
   String jsonString;
 
     // WIFI
+  jsonConfig["hostname"] = hostname;
   jsonConfig["wifi_name"] = wifi_name;
   jsonConfig["wifi_password"] = wifi_password;
   jsonConfig["ip_mode"] = ipMode;
@@ -206,9 +212,9 @@ bool saveConfig() {
 
 
   // KWH
-  jsonConfig["watiosTotal"] = watiosTotal;
-  jsonConfig["kiloWattHours"] = kiloWattHours;
-  jsonConfig["beforeResetKiloWattHours"] = beforeResetKiloWattHours;
+  //jsonConfig["wattTotal"] = wattTotal;
+  //jsonConfig["kiloWattHours"] = kiloWattHours;
+  //jsonConfig["beforeResetKiloWattHours"] = beforeResetKiloWattHours;
 
   File configFile = SPIFFS.open("/config.json", "w");
   if (!configFile) {

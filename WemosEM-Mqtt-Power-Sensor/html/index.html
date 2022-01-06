@@ -95,6 +95,7 @@ function loadConfig() {
   var postWifi = $.post("/api/loadConfig").done(function (data) {
 
     // WIFI
+    $('#hostname').val(data.hostname);
     $('#wifi-name').val(data.wifi_ssid);
     $('#wifi-pass').val(data.wifi_password);
     $('#wifi-ipmode').val(data.wifi_mode);
@@ -139,6 +140,7 @@ function saveWifi() {
 
   var postMQTT = $.post("/api/savewifi",
     {
+      'hostname': $('#hostname').val(),
       'wifi-name': $('#wifi-name').val(),
       'wifi-pass': $('#wifi-pass').val(),
       'wifi-ipmode': $('#wifi-ipmode').val(),
@@ -251,7 +253,7 @@ function loadStatus() {
 
       $('.current-value').html(data.current);
       $('.voltage-value').html(data.voltage);
-      $('.watios-value').html(data.watios);
+      $('.watt-value').html(data.watt);
       $('.kwh-value').html(data.kwh);
       $('.ical-value').html(data.ical);
       $('.mqttreconnected-value').html(data.mqttreconnected);
@@ -405,8 +407,8 @@ $(document).ready(function () {
               <td class="voltage-value">0.0</td>
             </tr>
             <tr>
-              <th scope="row">Watios</th>
-              <td class="watios-value">0.00</td>
+              <th scope="row">Watt</th>
+              <td class="watt-value">0.00</td>
             </tr>
             <tr>
               <th scope="row">KWh</th>
@@ -466,6 +468,12 @@ $(document).ready(function () {
             <h5 style="margin: 0;">Wifi Parameters</h5>
           </div>
           <div class="card-body">
+            <div class="row">
+              <div class="col-md-12 mb-2">
+                <label for="hostname">Hostname</label>
+                <input type="text" class="form-control form-control-sm" id="hostname" placeholder="" value="">
+              </div>
+            </div>
             <div class="row">
               <div class="col-md-6 mb-2">
                 <label for="wifi-name">Wifi Name</label>
